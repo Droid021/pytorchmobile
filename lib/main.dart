@@ -33,7 +33,6 @@ class TfliteHome extends StatefulWidget {
 class _TfliteHomeState extends State<TfliteHome> {
   String _model = "graph";
   File _image;
-
   double _imageWidth;
   double _imageHeight;
   bool _busy = true;
@@ -82,7 +81,39 @@ class _TfliteHomeState extends State<TfliteHome> {
     });
   }
 
-  List<Widget> renderBoxes(Size screen) {}
+  List<Widget> renderBoxes(Size screen) {
+    if (_recognitions == null) return [];
+    if (_imageHeight == null || _imageWidth == null) return [];
+
+    double factorX = screen.width;
+    double factorY = _imageHeight / _imageHeight * screen.width;
+    Color blue = Colors.blue;
+
+    return _recognitions.map((re) {
+      return Positioned(
+        left: re["rect"]["x"] * factorX,
+        top: re["rect"]["y"] * factorY,
+        width: re["rect"]["w"] * factorX,
+        height: re["rect"]["h"] * factorY,
+        child: Container(
+          decoration: BoxDecoration(
+            border: Border.all(
+              color: blue,
+              width: 3,
+            ),
+          ),
+          child: Text(
+            "${re["detectedClass"]} ${(re["confidenceInClass"] * 100).toStringAsFixed(0)}",
+            style: TextStyle(
+              background: Paint()..color = blue,
+              color: Colors.white,
+              fontSize: 15,
+            ),
+          ),
+        ),
+      );
+    }).toList();
+  }
 
   @override
   Widget build(BuildContext context) {
