@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:image/image.dart' as img;
 import 'package:image_picker/image_picker.dart';
 import 'package:tflite/tflite.dart';
@@ -37,6 +38,30 @@ class _TfliteHomeState extends State<TfliteHome> {
   double _imageHeight;
   bool _busy = true;
   List _recognitions;
+
+  @override
+  void initState() {
+    super.initState();
+    _busy = true;
+    loadModel().then((val) {
+      setState(() {
+        _busy = false;
+      });
+    });
+  }
+
+  loadModel() async {
+    Tflite.close();
+    try {
+      String res;
+      res = await Tflite.loadModel(
+          model: "assets/tflite/graph.lite",
+          labels: "assets/tflite/labels.txt");
+      print(res);
+    } on PlatformException {
+      print("Failed to load the model");
+    }
+  }
 
   selectFromImagePicker() async {
     var image = await ImagePicker.pickImage(source: ImageSource.gallery);
