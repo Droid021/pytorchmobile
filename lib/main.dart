@@ -82,8 +82,27 @@ class _TfliteHomeState extends State<TfliteHome> {
     });
   }
 
+  List<Widget> renderBoxes(Size screen) {}
+
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+    List<Widget> stackChildren = [];
+
+    stackChildren.add(Positioned(
+      top: 0.0,
+      left: 0.0,
+      width: size.width,
+      child: _image == null ? Text("No image selected") : Image.file(_image),
+    ));
+
+    stackChildren.addAll(renderBoxes(size));
+
+    if (_busy) {
+      stackChildren.add(Center(
+        child: CircularProgressIndicator(),
+      ));
+    }
     return Scaffold(
       appBar: AppBar(
         title: Text("Project Anga"),
@@ -91,6 +110,9 @@ class _TfliteHomeState extends State<TfliteHome> {
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.image),
         onPressed: selectFromImagePicker(),
+      ),
+      body: Stack(
+        children: stackChildren,
       ),
     );
   }
