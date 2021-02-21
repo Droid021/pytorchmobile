@@ -1,16 +1,18 @@
-# anga
+# PyTorch mobile template
 
-A new Flutter project.
+Samples collected for deploying pytorch and fastai models on android devices
 
-## Getting Started
+# Object Detector Android App Using PyTorch Mobile Neural Network
 
-This project is a starting point for a Flutter application.
+Check out the tutorial at: https://towardsdatascience.com/object-detector-android-app-using-pytorch-mobile-neural-network-407c419b56cd
 
-A few resources to get you started if this is your first Flutter project:
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Files/Folder
+ 1. ObjectDetectorDemo - Android Application.
+ 2. create_model.py - To create the PyTorch model.
+
+
+## Libraries needed for PyTorch model
+
+- pip install torchvision
